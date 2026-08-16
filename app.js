@@ -1091,26 +1091,18 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 
-  /* =========================
-     BACK / FORWARD
-  ========================= */
+/* =========================
+   REAL BACK / FORWARD NAVIGATION
+========================= */
 
-  window.addEventListener(
-    "popstate",
-    () => {
+window.addEventListener("popstate", () => {
 
-      const page =
-        location.hash
-          .replace("#", "") ||
-        "home";
+  const page =
+    location.hash.replace("#", "") || "home";
 
-      showPage(
-        page,
-        false
-      );
+  showPage(page, false);
 
-    }
-  );
+});
 
 
   /* =========================
