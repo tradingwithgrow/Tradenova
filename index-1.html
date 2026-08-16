@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#063B2A">
+  <title>TradeNova — Learn. Practice. Trade Smarter.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-mark">✦</div>
+        <div><strong>Trade<span>Nova</span></strong><small>Trading Academy</small></div>
+      </div>
+      <nav>
+        <button class="nav-item active" data-page="home">⌂ <span>Home</span></button>
+        <button class="nav-item" data-page="learn">▣ <span>Learn</span></button>
+        <button class="nav-item" data-page="practice">⌁ <span>Practice</span></button>
+        <button class="nav-item" data-page="progress">◈ <span>Progress</span></button>
+        <button class="nav-item" data-page="profile">◯ <span>Profile</span></button>
+      </nav>
+      <div class="sidebar-note">
+        <span>DEMO MODE</span>
+        <p>Practice with virtual funds. No real-money trading.</p>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div>
+          <div class="eyebrow">TRADENOVA ACADEMY</div>
+          <h1 id="pageTitle">Good morning, Trader 👋</h1>
+        </div>
+        <div class="top-actions">
+          <button class="icon-btn" aria-label="Notifications">♢</button>
+          <button class="profile-chip"><span class="avatar">MH</span><span class="desktop-only">Muhammad</span></button>
+        </div>
+      </header>
+
+      <section id="page-home" class="page active">
+        <div class="hero">
+          <div>
+            <span class="pill">CONTINUE LEARNING</span>
+            <h2>Build your trading skills<br><span>one lesson at a time.</span></h2>
+            <p>Structured education, interactive quizzes and risk-free practice.</p>
+            <button class="primary" data-page="learn">Continue Learning →</button>
+          </div>
+          <div class="nova-orbit"><div class="orbit-ring"></div><div class="nova-star">✦</div></div>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-card"><small>Learning Progress</small><strong>68%</strong><div class="progress"><i style="width:68%"></i></div></div>
+          <div class="stat-card"><small>Lessons Completed</small><strong>24</strong><span class="stat-meta">of 36 lessons</span></div>
+          <div class="stat-card"><small>Practice Trades</small><strong>47</strong><span class="stat-meta">demo trades</span></div>
+          <div class="stat-card"><small>Current Streak</small><strong>7 <em>days</em></strong><span class="stat-meta">Keep it going 🔥</span></div>
+        </div>
+
+        <div class="section-head"><div><h3>Recommended for you</h3><p>Continue building your foundation.</p></div><button class="text-btn" data-page="learn">View all →</button></div>
+        <div class="course-grid">
+          <article class="course-card"><div class="course-icon">◒</div><span class="level">BEGINNER</span><h3>Technical Analysis</h3><p>Charts, trends, support and resistance.</p><div class="card-bottom"><span>12 lessons · 2h 40m</span><b>68%</b></div><div class="progress"><i style="width:68%"></i></div></article>
+          <article class="course-card"><div class="course-icon gold">◈</div><span class="level">BEGINNER</span><h3>Risk Management</h3><p>Position sizing, stop loss and risk/reward.</p><div class="card-bottom"><span>8 lessons · 1h 35m</span><b>42%</b></div><div class="progress"><i style="width:42%"></i></div></article>
+          <article class="course-card"><div class="course-icon purple">◎</div><span class="level">ALL LEVELS</span><h3>Trading Psychology</h3><p>Discipline, patience and emotional control.</p><div class="card-bottom"><span>10 lessons · 1h 55m</span><b>15%</b></div><div class="progress"><i style="width:15%"></i></div></article>
+        </div>
+      </section>
+
+      <section id="page-learn" class="page">
+        <div class="page-banner"><span class="pill">TRADING ACADEMY</span><h2>Learn with a clear path.</h2><p>Move from fundamentals to confident demo practice.</p></div>
+        <div class="tabs"><button class="tab active">All</button><button class="tab">Beginner</button><button class="tab">Technical</button><button class="tab">Risk</button><button class="tab">Psychology</button></div>
+        <div class="course-grid four">
+          <article class="course-card"><div class="course-icon">◒</div><span class="level">BEGINNER → INTERMEDIATE</span><h3>Technical Analysis Masterclass</h3><p>Read charts, identify trends and understand key levels.</p><div class="card-bottom"><span>18 lessons · 4h 20m</span><b>68%</b></div><div class="progress"><i style="width:68%"></i></div><button class="secondary">Open Course</button></article>
+          <article class="course-card"><div class="course-icon gold">◈</div><span class="level">BEGINNER</span><h3>Risk Management</h3><p>Learn how risk controls shape every trading decision.</p><div class="card-bottom"><span>8 lessons · 1h 35m</span><b>42%</b></div><div class="progress"><i style="width:42%"></i></div><button class="secondary">Open Course</button></article>
+          <article class="course-card"><div class="course-icon purple">◎</div><span class="level">ALL LEVELS</span><h3>Trading Psychology</h3><p>Build discipline and recognize emotional mistakes.</p><div class="card-bottom"><span>10 lessons · 1h 55m</span><b>15%</b></div><div class="progress"><i style="width:15%"></i></div><button class="secondary">Open Course</button></article>
+          <article class="course-card"><div class="course-icon blue">◫</div><span class="level">INTERMEDIATE</span><h3>Market Fundamentals</h3><p>Understand news, economic drivers and market context.</p><div class="card-bottom"><span>14 lessons · 3h 05m</span><b>0%</b></div><div class="progress"><i style="width:0"></i></div><button class="secondary">Start Course</button></article>
+        </div>
+      </section>
+
+      <section id="page-practice" class="page">
+        <div class="practice-head"><div><span class="pill">DEMO / PRACTICE MODE</span><h2>Practice without real money.</h2><p>Use virtual funds to test what you learn.</p></div><div class="balance"><small>Virtual Balance</small><strong>$10,000.00</strong><span>+$240.80 this week</span></div></div>
+        <div class="stats-grid three"><div class="stat-card"><small>Open Positions</small><strong>2</strong></div><div class="stat-card"><small>Practice P&amp;L</small><strong>+$680</strong></div><div class="stat-card"><small>Win Rate</small><strong>61%</strong></div></div>
+        <div class="chart-card"><div class="section-head"><div><h3>Demo Market</h3><p>Illustrative chart for practice only.</p></div><span class="price">$2,486.40 <b>+1.82%</b></span></div><div class="chart"><svg viewBox="0 0 900 280" preserveAspectRatio="none"><polyline points="0,220 60,190 110,205 160,145 220,160 270,110 330,130 390,80 450,120 520,95 570,115 630,65 700,90 760,45 820,70 900,28"/></svg></div><div class="trade-actions"><button class="buy">BUY DEMO</button><button class="sell">SELL DEMO</button></div></div>
+        <div class="demo-warning">ⓘ <strong>Demo only:</strong> This simulator uses virtual funds and is not connected to a real brokerage account.</div>
+      </section>
+
+      <section id="page-progress" class="page">
+        <div class="page-banner"><span class="pill">YOUR JOURNEY</span><h2>Progress that you can see.</h2><p>Track learning, practice and consistency.</p></div>
+        <div class="progress-overview"><div class="ring"><strong>68%</strong><span>Complete</span></div><div><h3>Intermediate pathway</h3><p>24 of 36 lessons completed.</p><div class="progress big"><i style="width:68%"></i></div><button class="primary" data-page="learn">Continue Learning →</button></div></div>
+        <h3 class="subheading">Achievements</h3><div class="achievements"><div>🏆<strong>First Lesson</strong><small>Unlocked</small></div><div>🔥<strong>7-Day Streak</strong><small>Unlocked</small></div><div>🎯<strong>10 Lessons</strong><small>Unlocked</small></div><div class="locked">🔒<strong>Course Complete</strong><small>12 lessons left</small></div></div>
+      </section>
+
+      <section id="page-profile" class="page">
+        <div class="profile-card"><div class="large-avatar">MH</div><div><span class="pill">TRADENOVA LEARNER</span><h2>Muhammad</h2><p>Intermediate pathway · 2,480 XP</p></div></div>
+        <div class="settings-list"><button>▣ <span>My Courses</span><b>›</b></button><button>◈ <span>Certificates</span><b>›</b></button><button>✎ <span>Trading Journal</span><b>›</b></button><button>♢ <span>Notifications</span><b>›</b></button><button>⚙ <span>Settings</span><b>›</b></button><button>?</span> <span>Help &amp; Support</span><b>›</b></button></div>
+      </section>
+
+      <footer><span>TradeNova © 2026</span><span>Education first. Practice before risk.</span></footer>
+    </main>
+
+    <nav class="mobile-nav">
+      <button class="active" data-page="home">⌂<small>Home</small></button>
+      <button data-page="learn">▣<small>Learn</small></button>
+      <button class="nova-nav" data-page="practice">✦</button>
+      <button data-page="progress">◈<small>Progress</small></button>
+      <button data-page="profile">◯<small>Profile</small></button>
+    </nav>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
