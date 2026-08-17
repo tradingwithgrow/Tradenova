@@ -1188,74 +1188,128 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 
+          );
+
+    }
+
+
   /* =========================
      DEMO PRACTICE
   ========================= */
 
   function executeDemoTrade(side) {
 
-    const price =
-      67250.50;
-
+    const price = 67250.50;
 
     const quantityInput =
-      document.querySelector(
-        "#positionSize"
-      );
-
+      document.querySelector("#positionSize");
 
     const quantity =
       quantityInput
         ? Number(quantityInput.value) || 0.01
         : 0.01;
 
-
     const stopInput =
-      document.querySelector(
-        "#stopLoss"
-      );
-
+      document.querySelector("#stopLoss");
 
     const takeInput =
-      document.querySelector(
-        "#takeProfit"
-      );
-
+      document.querySelector("#takeProfit");
 
     const stopLoss =
       stopInput
         ? Number(stopInput.value) || 0
         : 0;
 
-
     const takeProfit =
       takeInput
         ? Number(takeInput.value) || 0
         : 0;
 
+    /* =========================
+       TRADE CALCULATIONS
+    ========================= */
 
     const positionValue =
       price * quantity;
 
-
     const risk =
       stopLoss > 0
-        ? Math.abs(
-            price - stopLoss
-          ) * quantity
+        ? Math.abs(price - stopLoss) * quantity
         : 0;
-
 
     const reward =
       takeProfit > 0
-        ? Math.abs(
-            takeProfit - price
-          ) * quantity
+        ? Math.abs(takeProfit - price) * quantity
         : 0;
 
+    const riskReward =
+      risk > 0 && reward > 0
+        ? (reward / risk).toFixed(2)
+        : "—";
+
+    /* =========================
+       VALIDATION
+    ========================= */
+
+    if (quantity <= 0) {
+
+      showMessage(
+        "Invalid Position Size",
+        "Please enter a valid position size before placing the demo order."
+      );
+
+      return;
+    }
+
+    if (stopLoss > 0 && takeProfit > 0) {
+
+      if (side === "BUY" && stopLoss >= price) {
+
+        showMessage(
+          "Invalid Stop Loss",
+          "For a BUY order, Stop Loss should normally be below the entry price."
+        );
+
+        return;
+      }
+
+      if (side === "BUY" && takeProfit <= price) {
+
+        showMessage(
+          "Invalid Take Profit",
+          "For a BUY order, Take Profit should normally be above the entry price."
+        );
+
+        return;
+      }
+
+      if (side === "SELL" && stopLoss <= price) {
+
+        showMessage(
+          "Invalid Stop Loss",
+          "For a SELL order, Stop Loss should normally be above the entry price."
+        );
+
+        return;
+      }
+
+      if (side === "SELL" && takeProfit >= price) {
+
+        showMessage(
+          "Invalid Take Profit",
+          "For a SELL order, Take Profit should normally be below the entry price."
+        );
+
+        return;
+      }
+
+    }
+
+    /* =========================
+       CREATE TRADE
+    ========================= */
 
     demoTrades++;
-
 
     const trade = {
 
@@ -1279,6 +1333,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
       reward: reward,
 
+      riskReward: riskReward,
+
       time:
         new Date().toLocaleTimeString(
           [],
@@ -1290,27 +1346,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
     };
 
-
-    /*
-      Demo balance adjustment.
-      BUY/SELL remains virtual only.
-    */
+    /* =========================
+       VIRTUAL BALANCE
+    ========================= */
 
     const change =
       side === "BUY"
         ? 125
         : -80;
 
-
-    virtualBalance +=
-      change;
-
+    virtualBalance += change;
 
     const balance =
       document.querySelector(
         "#page-practice .balance strong"
       );
-
 
     if (balance) {
 
@@ -1325,12 +1375,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
     }
 
+    /* =========================
+       TRADE COUNTER
+    ========================= */
 
     const trades =
       document.querySelector(
         "#page-practice .stats-grid .stat-card:first-child strong"
       );
-
 
     if (trades) {
 
@@ -1339,12 +1391,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
     }
 
+    /* =========================
+       EXECUTION MESSAGE
+    ========================= */
 
     const warning =
       document.querySelector(
         "#page-practice .demo-warning"
       );
-
 
     if (warning) {
 
@@ -1356,21 +1410,31 @@ document.addEventListener("DOMContentLoaded", () => {
           ${side} DEMO ORDER EXECUTED
         </strong>
 
-        <br>
+        <br><br>
 
         BTC/USD ·
         ${quantity} BTC @
         $${price.toLocaleString()}
 
-        <br>
+        <br><br>
 
         <small>
+
+          Position Value:
+          $${positionValue.toFixed(2)}
+
+          <br>
 
           Risk:
           $${risk.toFixed(2)}
 
-          · Target:
+          · Reward:
           $${reward.toFixed(2)}
+
+          <br>
+
+          Risk / Reward:
+          1:${riskReward}
 
         </small>
 
@@ -1384,12 +1448,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
     }
 
+    /* =========================
+       TRADE HISTORY
+    ========================= */
 
     const history =
       document.querySelector(
         "#page-practice .trade-history"
       );
-
 
     if (history) {
 
@@ -1398,10 +1464,8 @@ document.addEventListener("DOMContentLoaded", () => {
           "div"
         );
 
-
       row.className =
         "trade-history-row";
-
 
       row.innerHTML = `
 
@@ -1427,13 +1491,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
       `;
 
-
       history.prepend(row);
 
     }
 
-  }
-
+   }
 
   /* =========================
      PROFILE / JOURNAL
