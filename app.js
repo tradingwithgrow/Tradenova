@@ -884,8 +884,138 @@ document.addEventListener("DOMContentLoaded", () => {
   /* =========================
      DEMO PRACTICE
   ========================= */
+function executeDemoTrade(side) {
 
-  function executeDemoTrade(side) {
+  const price = 67250.50;
+
+  const quantityInput =
+    document.querySelector("#positionSize");
+
+  const quantity =
+    quantityInput
+      ? Number(quantityInput.value) || 0.01
+      : 0.01;
+
+  const stopInput =
+    document.querySelector("#stopLoss");
+
+  const takeInput =
+    document.querySelector("#takeProfit");
+
+  const stopLoss =
+    stopInput
+      ? Number(stopInput.value) || 0
+      : 0;
+
+  const takeProfit =
+    takeInput
+      ? Number(takeInput.value) || 0
+      : 0;
+
+  const positionValue =
+    price * quantity;
+
+  const risk =
+    stopLoss > 0
+      ? Math.abs(price - stopLoss) * quantity
+      : 0;
+
+  const reward =
+    takeProfit > 0
+      ? Math.abs(takeProfit - price) * quantity
+      : 0;
+
+  demoTrades++;
+
+  const trade = {
+    id: Date.now(),
+    side: side,
+    asset: "BTC/USD",
+    price: price,
+    quantity: quantity,
+    stopLoss: stopLoss,
+    takeProfit: takeProfit,
+    value: positionValue,
+    risk: risk,
+    reward: reward,
+    time: new Date().toLocaleTimeString([], {
+      hour: "2-digit",
+      minute: "2-digit"
+    })
+  };
+
+  virtualBalance -=
+    side === "BUY"
+      ? 0
+      : 0;
+
+  const balance =
+    document.querySelector(
+      "#page-practice .balance strong"
+    );
+
+  if (balance) {
+
+    balance.textContent =
+      "$" +
+      virtualBalance.toLocaleString(
+        "en-US",
+        {
+          minimumFractionDigits: 2
+        }
+      );
+
+  }
+
+  const warning =
+    document.querySelector(
+      "#page-practice .demo-warning"
+    );
+
+  if (warning) {
+
+    warning.innerHTML = `
+      ✓ <strong>${side} DEMO ORDER EXECUTED</strong><br>
+      BTC/USD · ${quantity} BTC @ $${price.toLocaleString()}<br>
+      <small>
+        Risk: $${risk.toFixed(2)}
+        · Target: $${reward.toFixed(2)}
+      </small>
+      <br><br>
+      <span>
+        Virtual funds only — no real money was used.
+      </span>
+    `;
+
+  }
+
+  const history =
+    document.querySelector(
+      "#page-practice .trade-history"
+    );
+
+  if (history) {
+
+    const row =
+      document.createElement("div");
+
+    row.className =
+      "trade-history-row";
+
+    row.innerHTML = `
+      <strong>${side}</strong>
+      <span>BTC/USD</span>
+      <span>${quantity} BTC</span>
+      <span>$${price.toLocaleString()}</span>
+      <span>${trade.time}</span>
+    `;
+
+    history.prepend(row);
+
+  }
+
+}
+  
 
     demoTrades++;
 
