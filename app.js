@@ -1934,5 +1934,4 @@ document.addEventListener("DOMContentLoaded", () => {
      INITIAL CALCULATION
   ========================= */
 
-  updateTradeCalculator();
-});
+  updateTradeCalculator();});
