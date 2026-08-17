@@ -11,6 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   const courses = {
+
     "Technical Analysis": {
       level: "BEGINNER → INTERMEDIATE",
       icon: "◒",
@@ -99,7 +100,9 @@ document.addEventListener("DOMContentLoaded", () => {
         "News Risk"
       ]
     }
+
   };
+
 
   let currentCourse = null;
   let currentLesson = 0;
@@ -119,271 +122,66 @@ document.addEventListener("DOMContentLoaded", () => {
 
     pages.forEach(page => {
 
-      const section = document.getElementById("page-" + page);
+      const section =
+        document.getElementById("page-" + page);
 
       if (section) {
+
         section.classList.toggle(
           "active",
           page === name
         );
+
       }
 
     });
 
-    document.querySelectorAll("[data-page]").forEach(button => {
 
-      button.classList.toggle(
-        "active",
-        button.dataset.page === name
-      );
+    document
+      .querySelectorAll("[data-page]")
+      .forEach(button => {
 
-    });
+        button.classList.toggle(
+          "active",
+          button.dataset.page === name
+        );
 
-    const title = document.getElementById("pageTitle");
+      });
+
+
+    const title =
+      document.getElementById("pageTitle");
 
     if (title) {
       title.textContent = titles[name];
     }
 
-    if (updateUrl) {
-      history.pushState(
-        { page: name },
-        "",
-        "#" + name
-      );
-    }
-
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth"
-    });
-  }
-
-
-  /* =========================
-     MAIN NAVIGATION
-  ========================= */
-
-  document.addEventListener("click", event => {
-
-    const nav = event.target.closest("[data-page]");
-
-    if (nav) {
-
-      event.preventDefault();
-
-      showPage(nav.dataset.page);
-
-      return;
-    }
-
-
-    /* HOME → LEARN */
-
-    const continueButton =
-      event.target.closest(".primary");
-
-    if (
-      continueButton &&
-      continueButton.textContent
-        .toLowerCase()
-        .includes("continue learning")
-    ) {
-
-      showPage("learn");
-
-      return;
-    }
-
-
-    /* VIEW ALL */
-
-    const textButton =
-      event.target.closest(".text-btn");
-
-    if (
-      textButton &&
-      textButton.textContent
-        .toLowerCase()
-        .includes("view all")
-    ) {
-
-      showPage("learn");
-
-      return;
-    }
-
-
-    /* COURSE CARD */
-
-    const card =
-      event.target.closest(".course-card");
-
-    if (card) {
-
-      const heading =
-        card.querySelector("h3");
-
-      if (heading) {
-
-        const name =
-          heading.textContent.trim();
-
-        if (courses[name]) {
-
-          openCourse(name);
-
-          return;
-        }
-      }
-    }
-
-
-    /* OPEN COURSE BUTTON */
-
-    const secondary =
-      event.target.closest(".secondary");
-
-    if (
-      secondary &&
-      secondary.textContent
-        .toLowerCase()
-        .includes("course")
-    ) {
-
-      const card =
-        secondary.closest(".course-card");
-
-      if (card) {
-
-        const heading =
-          card.querySelector("h3");
-
-        if (heading) {
-
-          const name =
-            heading.textContent.trim();
-
-          if (courses[name]) {
-
-            openCourse(name);
-
-            return;
-          }
-        }
-      }
-    }
-
-
-    /* LESSON */
-
-    const lessonButton =
-      event.target.closest("[data-lesson]");
-
-    if (lessonButton) {
-
-      currentLesson =
-        Number(lessonButton.dataset.lesson);
-
-      openLesson();
-
-      return;
-    }
-
-
-    /* BACK TO COURSE */
-
-    if (
-      event.target.closest("[data-course-back]")
-    ) {
-
-      openCourse(currentCourse);
-
-      return;
-    }
-
-
-    /* BACK TO ACADEMY */
-
-    if (
-      event.target.closest("[data-academy-back]")
-    ) {
-
-      restoreLearn();
-
-      showPage("learn");
-
-      return;
-    }
-
-
-    /* NEXT LESSON */
-
-    if (
-      event.target.closest("[data-next]")
-    ) {
-
-      currentLesson++;
-
-      openLesson();
-
-      return;
-    }
-
-  /* =========================
-     PAGE NAVIGATION
-  ========================= */
-
-  function showPage(name, updateUrl = true) {
-
-    if (!pages.includes(name)) {
-      name = "home";
-    }
-
-    pages.forEach(page => {
-
-      const section = document.getElementById("page-" + page);
-
-      if (section) {
-        section.classList.toggle(
-          "active",
-          page === name
-        );
-      }
-
-    });
-
-    document.querySelectorAll("[data-page]").forEach(button => {
-
-      button.classList.toggle(
-        "active",
-        button.dataset.page === name
-      );
-
-    });
-
-    const title = document.getElementById("pageTitle");
-
-    if (title) {
-      title.textContent = titles[name];
-    }
 
     if (updateUrl) {
-      const newHash = "#" + name;
 
-      if (window.location.hash !== newHash) {
+      const newHash =
+        "#" + name;
+
+      if (
+        window.location.hash !== newHash
+      ) {
+
         history.pushState(
           { page: name },
           "",
           newHash
         );
+
       }
+
     }
+
 
     window.scrollTo({
       top: 0,
       behavior: "smooth"
     });
+
   }
 
 
@@ -393,12 +191,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.addEventListener("click", event => {
 
-    const nav = event.target.closest("[data-page]");
+
+    /* MAIN PAGE NAVIGATION */
+
+    const nav =
+      event.target.closest("[data-page]");
 
     if (nav) {
+
       event.preventDefault();
+
       showPage(nav.dataset.page);
+
       return;
+
     }
 
 
@@ -413,9 +219,13 @@ document.addEventListener("DOMContentLoaded", () => {
         .toLowerCase()
         .includes("continue learning")
     ) {
+
       event.preventDefault();
+
       showPage("learn");
+
       return;
+
     }
 
 
@@ -430,9 +240,13 @@ document.addEventListener("DOMContentLoaded", () => {
         .toLowerCase()
         .includes("view all")
     ) {
+
       event.preventDefault();
+
       showPage("learn");
+
       return;
+
     }
 
 
@@ -452,11 +266,17 @@ document.addEventListener("DOMContentLoaded", () => {
           heading.textContent.trim();
 
         if (courses[name]) {
+
           event.preventDefault();
+
           openCourse(name);
+
           return;
+
         }
+
       }
+
     }
 
 
@@ -486,12 +306,19 @@ document.addEventListener("DOMContentLoaded", () => {
             heading.textContent.trim();
 
           if (courses[name]) {
+
             event.preventDefault();
+
             openCourse(name);
+
             return;
+
           }
+
         }
+
       }
+
     }
 
 
@@ -505,11 +332,14 @@ document.addEventListener("DOMContentLoaded", () => {
       event.preventDefault();
 
       currentLesson =
-        Number(lessonButton.dataset.lesson);
+        Number(
+          lessonButton.dataset.lesson
+        );
 
       openLesson();
 
       return;
+
     }
 
 
@@ -526,6 +356,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       return;
+
     }
 
 
@@ -538,9 +369,11 @@ document.addEventListener("DOMContentLoaded", () => {
       event.preventDefault();
 
       restoreLearn();
+
       showPage("learn");
 
       return;
+
     }
 
 
@@ -557,13 +390,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (
         course &&
-        currentLesson < course.lessons.length - 1
+        currentLesson <
+          course.lessons.length - 1
       ) {
+
         currentLesson++;
+
         openLesson();
+
       }
 
       return;
+
     }
 
 
@@ -576,11 +414,15 @@ document.addEventListener("DOMContentLoaded", () => {
       event.preventDefault();
 
       if (currentLesson > 0) {
+
         currentLesson--;
+
         openLesson();
+
       }
 
       return;
+
     }
 
 
@@ -591,9 +433,11 @@ document.addEventListener("DOMContentLoaded", () => {
     ) {
 
       event.preventDefault();
+
       openQuiz();
 
       return;
+
     }
 
 
@@ -605,9 +449,11 @@ document.addEventListener("DOMContentLoaded", () => {
     if (answer) {
 
       event.preventDefault();
+
       checkAnswer(answer);
 
       return;
+
     }
 
 
@@ -618,9 +464,11 @@ document.addEventListener("DOMContentLoaded", () => {
     ) {
 
       event.preventDefault();
+
       executeDemoTrade("BUY");
 
       return;
+
     }
 
 
@@ -631,16 +479,20 @@ document.addEventListener("DOMContentLoaded", () => {
     ) {
 
       event.preventDefault();
+
       executeDemoTrade("SELL");
 
       return;
+
     }
 
 
     /* PROFILE SETTINGS */
 
     const setting =
-      event.target.closest(".settings-list button");
+      event.target.closest(
+        ".settings-list button"
+      );
 
     if (setting) {
 
@@ -649,17 +501,32 @@ document.addEventListener("DOMContentLoaded", () => {
       const text =
         setting.textContent.toLowerCase();
 
-      if (text.includes("my courses")) {
+
+      if (
+        text.includes("my courses")
+      ) {
+
         showPage("learn");
+
         return;
+
       }
 
-      if (text.includes("trading journal")) {
+
+      if (
+        text.includes("trading journal")
+      ) {
+
         showJournal();
+
         return;
+
       }
 
-      if (text.includes("notifications")) {
+
+      if (
+        text.includes("notifications")
+      ) {
 
         showMessage(
           "Notifications",
@@ -667,9 +534,13 @@ document.addEventListener("DOMContentLoaded", () => {
         );
 
         return;
+
       }
 
-      if (text.includes("settings")) {
+
+      if (
+        text.includes("settings")
+      ) {
 
         showMessage(
           "Settings",
@@ -677,9 +548,13 @@ document.addEventListener("DOMContentLoaded", () => {
         );
 
         return;
+
       }
 
-      if (text.includes("help")) {
+
+      if (
+        text.includes("help")
+      ) {
 
         showMessage(
           "Help & Support",
@@ -687,7 +562,9 @@ document.addEventListener("DOMContentLoaded", () => {
         );
 
         return;
+
       }
+
     }
 
   });
@@ -697,31 +574,47 @@ document.addEventListener("DOMContentLoaded", () => {
      BROWSER BACK / FORWARD
   ========================= */
 
-  window.addEventListener("popstate", event => {
+  window.addEventListener(
+    "popstate",
+    event => {
 
-    let page = null;
+      let page = null;
 
-    if (
-      event.state &&
-      event.state.page &&
-      pages.includes(event.state.page)
-    ) {
-      page = event.state.page;
+
+      if (
+        event.state &&
+        event.state.page &&
+        pages.includes(event.state.page)
+      ) {
+
+        page =
+          event.state.page;
+
+      }
+
+
+      if (!page) {
+
+        page =
+          window.location.hash
+            .replace("#", "")
+            .trim();
+
+      }
+
+
+      if (!pages.includes(page)) {
+        page = "home";
+      }
+
+
+      showPage(
+        page,
+        false
+      );
+
     }
-
-    if (!page) {
-      page =
-        window.location.hash
-          .replace("#", "")
-          .trim();
-    }
-
-    if (!pages.includes(page)) {
-      page = "home";
-    }
-
-    showPage(page, false);
-  });
+  );
 
 
   /* =========================
@@ -733,18 +626,35 @@ document.addEventListener("DOMContentLoaded", () => {
       .replace("#", "")
       .trim();
 
-  if (pages.includes(initialPage)) {
-    showPage(initialPage, false);
+
+  if (
+    pages.includes(initialPage)
+  ) {
+
+    showPage(
+      initialPage,
+      false
+    );
+
   } else {
-    showPage("home", false);
+
+    showPage(
+      "home",
+      false
+    );
+
   }
+
 
   /* =========================
      LEARN PAGE
   ========================= */
 
   const learnPage =
-    document.getElementById("page-learn");
+    document.getElementById(
+      "page-learn"
+    );
+
 
   const originalLearn =
     learnPage
@@ -755,8 +665,10 @@ document.addEventListener("DOMContentLoaded", () => {
   function restoreLearn() {
 
     if (learnPage) {
+
       learnPage.innerHTML =
         originalLearn;
+
     }
 
   }
@@ -771,9 +683,13 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    currentCourse = name;
 
-    currentLesson = 0;
+    currentCourse =
+      name;
+
+    currentLesson =
+      0;
+
 
     learnPage.innerHTML = `
 
@@ -807,25 +723,56 @@ document.addEventListener("DOMContentLoaded", () => {
       <div class="stats-grid">
 
         <div class="stat-card">
-          <small>Course Progress</small>
-          <strong>${course.progress}%</strong>
+
+          <small>
+            Course Progress
+          </small>
+
+          <strong>
+            ${course.progress}%
+          </strong>
 
           <div class="progress">
-            <i style="width:${course.progress}%"></i>
+
+            <i
+              style="width:${course.progress}%"
+            ></i>
+
           </div>
+
         </div>
 
+
         <div class="stat-card">
-          <small>Course Length</small>
-          <strong>${course.lessons.length}</strong>
+
+          <small>
+            Course Length
+          </small>
+
+          <strong>
+            ${course.lessons.length}
+          </strong>
+
           <span class="stat-meta">
             lessons
           </span>
+
         </div>
 
+
         <div class="stat-card">
-          <small>Estimated Time</small>
-          <strong>${course.duration.split("·")[1] || "Self paced"}</strong>
+
+          <small>
+            Estimated Time
+          </small>
+
+          <strong>
+            ${
+              course.duration.split("·")[1]
+              || "Self paced"
+            }
+          </strong>
+
         </div>
 
       </div>
@@ -834,6 +781,7 @@ document.addEventListener("DOMContentLoaded", () => {
       <div class="section-head">
 
         <div>
+
           <h3>
             Course Curriculum
           </h3>
@@ -841,6 +789,7 @@ document.addEventListener("DOMContentLoaded", () => {
           <p>
             Complete each lesson in order.
           </p>
+
         </div>
 
       </div>
@@ -848,7 +797,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
       <div class="course-grid">
 
-        ${course.lessons.map((lesson, index) => `
+        ${course.lessons.map(
+          (lesson, index) => `
 
           <article
             class="course-card"
@@ -875,9 +825,15 @@ document.addEventListener("DOMContentLoaded", () => {
             <div class="card-bottom">
 
               <span>
-                ${index < Math.ceil(course.progress / 100 * course.lessons.length)
-                  ? "Completed"
-                  : "15 min lesson"}
+                ${
+                  index <
+                  Math.ceil(
+                    course.progress / 100 *
+                    course.lessons.length
+                  )
+                    ? "Completed"
+                    : "15 min lesson"
+                }
               </span>
 
               <b>
@@ -888,11 +844,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
           </article>
 
-        `).join("")}
+        `
+        ).join("")}
 
       </div>
 
     `;
+
 
     showPage("learn");
 
@@ -912,11 +870,13 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
+
     const lesson =
       course.lessons[currentLesson];
 
     const total =
       course.lessons.length;
+
 
     learnPage.innerHTML = `
 
@@ -978,10 +938,16 @@ document.addEventListener("DOMContentLoaded", () => {
         <br>
 
         <div class="demo-warning">
+
           ⓘ
-          <strong>Education first:</strong>
+
+          <strong>
+            Education first:
+          </strong>
+
           This lesson is for educational purposes and
           does not guarantee trading results.
+
         </div>
 
       </article>
@@ -997,6 +963,7 @@ document.addEventListener("DOMContentLoaded", () => {
           ← Previous
         </button>
 
+
         <button
           class="primary"
           data-quiz
@@ -1004,29 +971,36 @@ document.addEventListener("DOMContentLoaded", () => {
           Quick Quiz →
         </button>
 
+
         ${
-          currentLesson < total - 1
-          ? `
+          currentLesson <
+          total - 1
+            ? `
+
             <button
               class="primary"
               data-next
             >
               Next Lesson →
             </button>
+
           `
-          : `
+            : `
+
             <button
               class="primary"
               data-academy-back
             >
               Complete Course ✓
             </button>
+
           `
         }
 
       </div>
 
     `;
+
 
     showPage("learn");
 
@@ -1042,8 +1016,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const course =
       courses[currentCourse];
 
+    if (!course) {
+      return;
+    }
+
+
     const lesson =
       course.lessons[currentLesson];
+
 
     learnPage.innerHTML = `
 
@@ -1082,6 +1062,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         <br>
 
+
         <button
           class="secondary quiz-option"
           data-answer="wrong"
@@ -1090,6 +1071,7 @@ document.addEventListener("DOMContentLoaded", () => {
         </button>
 
         <br><br>
+
 
         <button
           class="secondary quiz-option"
@@ -1100,12 +1082,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
         <br><br>
 
+
         <button
           class="secondary quiz-option"
           data-answer="wrong"
         >
           Ignore risk controls until it becomes profitable.
         </button>
+
 
         <div
           id="quiz-result"
@@ -1116,6 +1100,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     `;
 
+
     showPage("learn");
 
   }
@@ -1124,50 +1109,78 @@ document.addEventListener("DOMContentLoaded", () => {
   function checkAnswer(button) {
 
     const result =
-      document.getElementById("quiz-result");
+      document.getElementById(
+        "quiz-result"
+      );
 
     if (!result) {
       return;
     }
 
+
     document
       .querySelectorAll(".quiz-option")
       .forEach(option => {
+
         option.disabled = true;
+
       });
+
 
     if (
       button.dataset.answer === "correct"
     ) {
 
       result.innerHTML = `
+
         <div class="demo-warning">
-          ✓ <strong>Correct!</strong>
+
+          ✓
+
+          <strong>
+            Correct!
+          </strong>
+
           Great job. You understand the core principle.
+
           <br><br>
+
           <button
             class="primary"
             data-next
           >
-            Continue → 
+            Continue →
           </button>
+
         </div>
+
       `;
 
     } else {
 
       result.innerHTML = `
+
         <div class="demo-warning">
-          ✕ <strong>Not quite.</strong>
+
+          ✕
+
+          <strong>
+            Not quite.
+          </strong>
+
           Risk should always be defined before increasing exposure.
+
           <br><br>
+
           <button
             class="secondary"
             data-course-back
           >
             Review Lesson
           </button>
+
         </div>
+
       `;
 
     }
@@ -1178,152 +1191,126 @@ document.addEventListener("DOMContentLoaded", () => {
   /* =========================
      DEMO PRACTICE
   ========================= */
-function executeDemoTrade(side) {
 
-  const price = 67250.50;
+  function executeDemoTrade(side) {
 
-  const quantityInput =
-    document.querySelector("#positionSize");
+    const price =
+      67250.50;
 
-  const quantity =
-    quantityInput
-      ? Number(quantityInput.value) || 0.01
-      : 0.01;
 
-  const stopInput =
-    document.querySelector("#stopLoss");
-
-  const takeInput =
-    document.querySelector("#takeProfit");
-
-  const stopLoss =
-    stopInput
-      ? Number(stopInput.value) || 0
-      : 0;
-
-  const takeProfit =
-    takeInput
-      ? Number(takeInput.value) || 0
-      : 0;
-
-  const positionValue =
-    price * quantity;
-
-  const risk =
-    stopLoss > 0
-      ? Math.abs(price - stopLoss) * quantity
-      : 0;
-
-  const reward =
-    takeProfit > 0
-      ? Math.abs(takeProfit - price) * quantity
-      : 0;
-
-  demoTrades++;
-
-  const trade = {
-    id: Date.now(),
-    side: side,
-    asset: "BTC/USD",
-    price: price,
-    quantity: quantity,
-    stopLoss: stopLoss,
-    takeProfit: takeProfit,
-    value: positionValue,
-    risk: risk,
-    reward: reward,
-    time: new Date().toLocaleTimeString([], {
-      hour: "2-digit",
-      minute: "2-digit"
-    })
-  };
-
-  virtualBalance -=
-    side === "BUY"
-      ? 0
-      : 0;
-
-  const balance =
-    document.querySelector(
-      "#page-practice .balance strong"
-    );
-
-  if (balance) {
-
-    balance.textContent =
-      "$" +
-      virtualBalance.toLocaleString(
-        "en-US",
-        {
-          minimumFractionDigits: 2
-        }
+    const quantityInput =
+      document.querySelector(
+        "#positionSize"
       );
 
-  }
 
-  const warning =
-    document.querySelector(
-      "#page-practice .demo-warning"
-    );
+    const quantity =
+      quantityInput
+        ? Number(quantityInput.value) || 0.01
+        : 0.01;
 
-  if (warning) {
 
-    warning.innerHTML = `
-      ✓ <strong>${side} DEMO ORDER EXECUTED</strong><br>
-      BTC/USD · ${quantity} BTC @ $${price.toLocaleString()}<br>
-      <small>
-        Risk: $${risk.toFixed(2)}
-        · Target: $${reward.toFixed(2)}
-      </small>
-      <br><br>
-      <span>
-        Virtual funds only — no real money was used.
-      </span>
-    `;
+    const stopInput =
+      document.querySelector(
+        "#stopLoss"
+      );
 
-  }
 
-  const history =
-    document.querySelector(
-      "#page-practice .trade-history"
-    );
+    const takeInput =
+      document.querySelector(
+        "#takeProfit"
+      );
 
-  if (history) {
 
-    const row =
-      document.createElement("div");
+    const stopLoss =
+      stopInput
+        ? Number(stopInput.value) || 0
+        : 0;
 
-    row.className =
-      "trade-history-row";
 
-    row.innerHTML = `
-      <strong>${side}</strong>
-      <span>BTC/USD</span>
-      <span>${quantity} BTC</span>
-      <span>$${price.toLocaleString()}</span>
-      <span>${trade.time}</span>
-    `;
+    const takeProfit =
+      takeInput
+        ? Number(takeInput.value) || 0
+        : 0;
 
-    history.prepend(row);
 
-  }
+    const positionValue =
+      price * quantity;
 
-}
-  
+
+    const risk =
+      stopLoss > 0
+        ? Math.abs(
+            price - stopLoss
+          ) * quantity
+        : 0;
+
+
+    const reward =
+      takeProfit > 0
+        ? Math.abs(
+            takeProfit - price
+          ) * quantity
+        : 0;
+
 
     demoTrades++;
+
+
+    const trade = {
+
+      id: Date.now(),
+
+      side: side,
+
+      asset: "BTC/USD",
+
+      price: price,
+
+      quantity: quantity,
+
+      stopLoss: stopLoss,
+
+      takeProfit: takeProfit,
+
+      value: positionValue,
+
+      risk: risk,
+
+      reward: reward,
+
+      time:
+        new Date().toLocaleTimeString(
+          [],
+          {
+            hour: "2-digit",
+            minute: "2-digit"
+          }
+        )
+
+    };
+
+
+    /*
+      Demo balance adjustment.
+      BUY/SELL remains virtual only.
+    */
 
     const change =
       side === "BUY"
         ? 125
         : -80;
 
-    virtualBalance += change;
+
+    virtualBalance +=
+      change;
+
 
     const balance =
       document.querySelector(
         "#page-practice .balance strong"
       );
+
 
     if (balance) {
 
@@ -1338,26 +1325,110 @@ function executeDemoTrade(side) {
 
     }
 
+
     const trades =
       document.querySelector(
         "#page-practice .stats-grid .stat-card:first-child strong"
       );
 
+
     if (trades) {
-      trades.textContent = "1";
+
+      trades.textContent =
+        demoTrades;
+
     }
+
 
     const warning =
       document.querySelector(
         "#page-practice .demo-warning"
       );
 
+
     if (warning) {
 
       warning.innerHTML = `
-        ✓ <strong>${side} DEMO order recorded.</strong>
-        Virtual funds only. No real money was used.
+
+        ✓
+
+        <strong>
+          ${side} DEMO ORDER EXECUTED
+        </strong>
+
+        <br>
+
+        BTC/USD ·
+        ${quantity} BTC @
+        $${price.toLocaleString()}
+
+        <br>
+
+        <small>
+
+          Risk:
+          $${risk.toFixed(2)}
+
+          · Target:
+          $${reward.toFixed(2)}
+
+        </small>
+
+        <br><br>
+
+        <span>
+          Virtual funds only — no real money was used.
+        </span>
+
       `;
+
+    }
+
+
+    const history =
+      document.querySelector(
+        "#page-practice .trade-history"
+      );
+
+
+    if (history) {
+
+      const row =
+        document.createElement(
+          "div"
+        );
+
+
+      row.className =
+        "trade-history-row";
+
+
+      row.innerHTML = `
+
+        <strong>
+          ${side}
+        </strong>
+
+        <span>
+          BTC/USD
+        </span>
+
+        <span>
+          ${quantity} BTC
+        </span>
+
+        <span>
+          $${price.toLocaleString()}
+        </span>
+
+        <span>
+          ${trade.time}
+        </span>
+
+      `;
+
+
+      history.prepend(row);
 
     }
 
@@ -1371,7 +1442,15 @@ function executeDemoTrade(side) {
   function showJournal() {
 
     const profile =
-      document.getElementById("page-profile");
+      document.getElementById(
+        "page-profile"
+      );
+
+
+    if (!profile) {
+      return;
+    }
+
 
     profile.innerHTML = `
 
@@ -1411,6 +1490,7 @@ function executeDemoTrade(side) {
           What did you learn from today's practice?
         </p>
 
+
         <textarea
           placeholder="Write your trading notes here..."
           style="
@@ -1426,7 +1506,9 @@ function executeDemoTrade(side) {
           "
         ></textarea>
 
+
         <br><br>
+
 
         <button
           class="primary"
@@ -1439,6 +1521,7 @@ function executeDemoTrade(side) {
 
     `;
 
+
     showPage("profile");
 
   }
@@ -1448,20 +1531,31 @@ function executeDemoTrade(side) {
      MESSAGE
   ========================= */
 
-  function showMessage(title, message) {
+  function showMessage(
+    title,
+    message
+  ) {
 
     const old =
-      document.querySelector(".tn-modal");
+      document.querySelector(
+        ".tn-modal"
+      );
+
 
     if (old) {
       old.remove();
     }
 
+
     const modal =
-      document.createElement("div");
+      document.createElement(
+        "div"
+      );
+
 
     modal.className =
       "tn-modal";
+
 
     modal.innerHTML = `
 
@@ -1510,37 +1604,68 @@ function executeDemoTrade(side) {
 
     `;
 
-    document.body.appendChild(modal);
+
+    document.body.appendChild(
+      modal
+    );
 
   }
 
 
-/* =========================
-   REAL BACK / FORWARD NAVIGATION
-========================= */
+  /* =========================
+     REAL BACK / FORWARD
+  ========================= */
 
-window.addEventListener("popstate", () => {
+  window.addEventListener(
+    "popstate",
+    () => {
 
-  const page =
-    location.hash.replace("#", "") || "home";
+      let page =
+        location.hash
+          .replace("#", "")
+          .trim();
 
-  showPage(page, false);
 
-});
+      if (!pages.includes(page)) {
+        page = "home";
+      }
+
+
+      showPage(
+        page,
+        false
+      );
+
+    }
+  );
 
 
   /* =========================
-     INITIAL LOAD
+     FINAL INITIAL LOAD
   ========================= */
 
-  const initialPage =
+  const pageOnLoad =
     location.hash
-      .replace("#", "") ||
-    "home";
+      .replace("#", "")
+      .trim();
 
-  showPage(
-    initialPage,
-    false
-  );
+
+  if (
+    pages.includes(pageOnLoad)
+  ) {
+
+    showPage(
+      pageOnLoad,
+      false
+    );
+
+  } else {
+
+    showPage(
+      "home",
+      false
+    );
+
+  }
 
 });
