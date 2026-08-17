@@ -330,6 +330,242 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
+  /* =========================
+     PAGE NAVIGATION
+  ========================= */
+
+  function showPage(name, updateUrl = true) {
+
+    if (!pages.includes(name)) {
+      name = "home";
+    }
+
+    pages.forEach(page => {
+
+      const section = document.getElementById("page-" + page);
+
+      if (section) {
+        section.classList.toggle(
+          "active",
+          page === name
+        );
+      }
+
+    });
+
+    document.querySelectorAll("[data-page]").forEach(button => {
+
+      button.classList.toggle(
+        "active",
+        button.dataset.page === name
+      );
+
+    });
+
+    const title = document.getElementById("pageTitle");
+
+    if (title) {
+      title.textContent = titles[name];
+    }
+
+    if (updateUrl) {
+      const newHash = "#" + name;
+
+      if (window.location.hash !== newHash) {
+        history.pushState(
+          { page: name },
+          "",
+          newHash
+        );
+      }
+    }
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  }
+
+
+  /* =========================
+     MAIN NAVIGATION
+  ========================= */
+
+  document.addEventListener("click", event => {
+
+    const nav = event.target.closest("[data-page]");
+
+    if (nav) {
+      event.preventDefault();
+      showPage(nav.dataset.page);
+      return;
+    }
+
+
+    /* HOME → LEARN */
+
+    const continueButton =
+      event.target.closest(".primary");
+
+    if (
+      continueButton &&
+      continueButton.textContent
+        .toLowerCase()
+        .includes("continue learning")
+    ) {
+      event.preventDefault();
+      showPage("learn");
+      return;
+    }
+
+
+    /* VIEW ALL */
+
+    const textButton =
+      event.target.closest(".text-btn");
+
+    if (
+      textButton &&
+      textButton.textContent
+        .toLowerCase()
+        .includes("view all")
+    ) {
+      event.preventDefault();
+      showPage("learn");
+      return;
+    }
+
+
+    /* COURSE CARD */
+
+    const card =
+      event.target.closest(".course-card");
+
+    if (card) {
+
+      const heading =
+        card.querySelector("h3");
+
+      if (heading) {
+
+        const name =
+          heading.textContent.trim();
+
+        if (courses[name]) {
+          event.preventDefault();
+          openCourse(name);
+          return;
+        }
+      }
+    }
+
+
+    /* OPEN COURSE BUTTON */
+
+    const secondary =
+      event.target.closest(".secondary");
+
+    if (
+      secondary &&
+      secondary.textContent
+        .toLowerCase()
+        .includes("course")
+    ) {
+
+      const card =
+        secondary.closest(".course-card");
+
+      if (card) {
+
+        const heading =
+          card.querySelector("h3");
+
+        if (heading) {
+
+          const name =
+            heading.textContent.trim();
+
+          if (courses[name]) {
+            event.preventDefault();
+            openCourse(name);
+            return;
+          }
+        }
+      }
+    }
+
+
+    /* LESSON */
+
+    const lessonButton =
+      event.target.closest("[data-lesson]");
+
+    if (lessonButton) {
+
+      event.preventDefault();
+
+      currentLesson =
+        Number(lessonButton.dataset.lesson);
+
+      openLesson();
+
+      return;
+    }
+
+
+    /* BACK TO COURSE */
+
+    if (
+      event.target.closest("[data-course-back]")
+    ) {
+
+      event.preventDefault();
+
+      if (currentCourse) {
+        openCourse(currentCourse);
+      }
+
+      return;
+    }
+
+
+    /* BACK TO ACADEMY */
+
+    if (
+      event.target.closest("[data-academy-back]")
+    ) {
+
+      event.preventDefault();
+
+      restoreLearn();
+      showPage("learn");
+
+      return;
+    }
+
+
+    /* NEXT LESSON */
+
+    if (
+      event.target.closest("[data-next]")
+    ) {
+
+      event.preventDefault();
+
+      const course =
+        courses[currentCourse];
+
+      if (
+        course &&
+        currentLesson < course.lessons.length - 1
+      ) {
+        currentLesson++;
+        openLesson();
+      }
+
+      return;
+    }
+
 
     /* PREVIOUS LESSON */
 
@@ -337,13 +573,12 @@ document.addEventListener("DOMContentLoaded", () => {
       event.target.closest("[data-prev]")
     ) {
 
-      currentLesson--;
+      event.preventDefault();
 
-      if (currentLesson < 0) {
-        currentLesson = 0;
+      if (currentLesson > 0) {
+        currentLesson--;
+        openLesson();
       }
-
-      openLesson();
 
       return;
     }
@@ -355,6 +590,7 @@ document.addEventListener("DOMContentLoaded", () => {
       event.target.closest("[data-quiz]")
     ) {
 
+      event.preventDefault();
       openQuiz();
 
       return;
@@ -368,6 +604,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (answer) {
 
+      event.preventDefault();
       checkAnswer(answer);
 
       return;
@@ -380,6 +617,7 @@ document.addEventListener("DOMContentLoaded", () => {
       event.target.closest(".buy")
     ) {
 
+      event.preventDefault();
       executeDemoTrade("BUY");
 
       return;
@@ -392,6 +630,7 @@ document.addEventListener("DOMContentLoaded", () => {
       event.target.closest(".sell")
     ) {
 
+      event.preventDefault();
       executeDemoTrade("SELL");
 
       return;
@@ -404,6 +643,8 @@ document.addEventListener("DOMContentLoaded", () => {
       event.target.closest(".settings-list button");
 
     if (setting) {
+
+      event.preventDefault();
 
       const text =
         setting.textContent.toLowerCase();
@@ -419,31 +660,84 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       if (text.includes("notifications")) {
+
         showMessage(
           "Notifications",
           "Your TradeNova learning notifications are enabled."
         );
+
         return;
       }
 
       if (text.includes("settings")) {
+
         showMessage(
           "Settings",
           "Profile and learning settings will be available here."
         );
+
         return;
       }
 
       if (text.includes("help")) {
+
         showMessage(
           "Help & Support",
           "TradeNova support interface is ready for future connection."
         );
+
+        return;
       }
     }
 
   });
 
+
+  /* =========================
+     BROWSER BACK / FORWARD
+  ========================= */
+
+  window.addEventListener("popstate", event => {
+
+    let page = null;
+
+    if (
+      event.state &&
+      event.state.page &&
+      pages.includes(event.state.page)
+    ) {
+      page = event.state.page;
+    }
+
+    if (!page) {
+      page =
+        window.location.hash
+          .replace("#", "")
+          .trim();
+    }
+
+    if (!pages.includes(page)) {
+      page = "home";
+    }
+
+    showPage(page, false);
+  });
+
+
+  /* =========================
+     INITIAL PAGE
+  ========================= */
+
+  const initialPage =
+    window.location.hash
+      .replace("#", "")
+      .trim();
+
+  if (pages.includes(initialPage)) {
+    showPage(initialPage, false);
+  } else {
+    showPage("home", false);
+  }
 
   /* =========================
      LEARN PAGE
