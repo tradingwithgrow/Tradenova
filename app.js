@@ -1730,4 +1730,209 @@ document.addEventListener("DOMContentLoaded", () => {
 
   }
 
+  /* =========================
+     LIVE TRADE CALCULATOR
+  ========================= */
+
+  function updateTradeCalculator() {
+
+    const price = 67250.50;
+
+    const quantityInput =
+      document.querySelector("#positionSize");
+
+    const stopInput =
+      document.querySelector("#stopLoss");
+
+    const takeInput =
+      document.querySelector("#takeProfit");
+
+    if (!quantityInput) {
+      return;
+    }
+
+    const quantity =
+      Number(quantityInput.value) || 0;
+
+    const stopLoss =
+      stopInput
+        ? Number(stopInput.value) || 0
+        : 0;
+
+    const takeProfit =
+      takeInput
+        ? Number(takeInput.value) || 0
+        : 0;
+
+
+    /* =========================
+       CALCULATIONS
+    ========================= */
+
+    const positionValue =
+      price * quantity;
+
+    const risk =
+      stopLoss > 0
+        ? Math.abs(price - stopLoss) * quantity
+        : 0;
+
+    const reward =
+      takeProfit > 0
+        ? Math.abs(takeProfit - price) * quantity
+        : 0;
+
+    const ratio =
+      risk > 0 && reward > 0
+        ? (reward / risk).toFixed(2)
+        : "—";
+
+
+    /* =========================
+       ORDER SUMMARY
+    ========================= */
+
+    const summary =
+      document.querySelector(
+        "#page-practice .order-summary"
+      );
+
+    if (!summary) {
+      return;
+    }
+
+    const values =
+      summary.querySelectorAll("div strong");
+
+    if (values[0]) {
+
+      values[0].textContent =
+        "$" +
+        positionValue.toLocaleString(
+          "en-US",
+          {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+          }
+        );
+
+    }
+
+    if (values[1]) {
+
+      values[1].textContent =
+        risk > 0
+          ? "$" + risk.toFixed(2)
+          : "Not defined";
+
+    }
+
+
+    /* =========================
+       EXTRA METRICS
+    ========================= */
+
+    let liveMetrics =
+      summary.querySelector(
+        ".live-trade-metrics"
+      );
+
+    if (!liveMetrics) {
+
+      liveMetrics =
+        document.createElement("div");
+
+      liveMetrics.className =
+        "live-trade-metrics";
+
+      liveMetrics.innerHTML = `
+
+        <div>
+          <span>Potential Reward</span>
+          <strong id="liveReward">—</strong>
+        </div>
+
+        <div>
+          <span>Risk / Reward</span>
+          <strong id="liveRiskReward">—</strong>
+        </div>
+
+      `;
+
+      summary.appendChild(
+        liveMetrics
+      );
+
+    }
+
+
+    const rewardElement =
+      document.querySelector(
+        "#liveReward"
+      );
+
+    if (rewardElement) {
+
+      rewardElement.textContent =
+        reward > 0
+          ? "$" + reward.toFixed(2)
+          : "Not defined";
+
+    }
+
+
+    const ratioElement =
+      document.querySelector(
+        "#liveRiskReward"
+      );
+
+    if (ratioElement) {
+
+      ratioElement.textContent =
+        ratio !== "—"
+          ? "1:" + ratio
+          : "—";
+
+    }
+
+  }
+
+
+  /* =========================
+     LIVE INPUT EVENTS
+  ========================= */
+
+  [
+    "#positionSize",
+    "#stopLoss",
+    "#takeProfit"
+  ].forEach(selector => {
+
+    const input =
+      document.querySelector(
+        selector
+      );
+
+    if (input) {
+
+      input.addEventListener(
+        "input",
+        updateTradeCalculator
+      );
+
+      input.addEventListener(
+        "change",
+        updateTradeCalculator
+      );
+
+    }
+
+  });
+
+
+  /* =========================
+     INITIAL CALCULATION
+  ========================= */
+
+  updateTradeCalculator();
 });
